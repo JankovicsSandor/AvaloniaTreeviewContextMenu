@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaTreeviewContextMenu.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:AvaloniaTreeviewContextMenu.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaTreeviewContextMenu.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaTreeviewContextMenu">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+  <StackPanel>
+    <TextBox Text="aaa"></TextBox>
+    <TreeView Items="{Binding WindowsList}" Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="2" Height="100">
+      <TreeView.ItemTemplate>
+        <TreeDataTemplate DataType="models:PackageItem" ItemsSource="{Binding Children}">
+          <DockPanel PointerPressed="PointerPressedOnWinNode" LastChildFill="True">
+            <TextBlock Margin="5 0 0 0" DockPanel.Dock="Right"  Text="{Binding DisplayName,Mode=TwoWay}"/>
+          </DockPanel>
+        </TreeDataTemplate>
+      </TreeView.ItemTemplate>
+      <TreeView.ContextMenu>
+        <ContextMenu Items="{Binding Path=ContextMenuItems,Mode=TwoWay}">
+          <ContextMenu.Styles>
+            <Style Selector="MenuItem">
+              <Setter Property="Header" Value="{Binding Header}"/>
+              <Setter Property="Items" Value="{Binding Items}"/>
+              <Setter Property="Command" Value="{Binding Command}"/>
+              <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+            </Style>
+          </ContextMenu.Styles>
+        </ContextMenu>
+      </TreeView.ContextMenu>
+    </TreeView>
+    <TextBox Text="bbb"></TextBox>
+  </StackPanel>
+
+</Window>
